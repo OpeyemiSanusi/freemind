@@ -1,0 +1,222 @@
+postId = Uuid().v4();
+                              var uploadTask = await storageRef
+                                  .child("post_$postId.aac")
+                                  .putFile(audiofile);
+                              print('ope audiofile uploaded');
+                              //get upload url
+                              String downloadUrl =
+                                  await uploadTask.ref.getDownloadURL();
+                              // String downloadUrl2 = await storageRef.getDownloadURL();
+                              print(downloadUrl);
+                              //print(downloadUrl2);
+                              await createPostInFirestore(
+                                mediaUrl: downloadUrl,
+                                postId: postId,
+                                audioDuration: audioDurationV2.toString(),
+                              );
+
+
+
+                              Navigator.pop(context);
+                            resetRecordParameters();
+                            setState(() {});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// former ad setup
+//fine but without the x icon
+
+
+                            Card(
+                elevation: 0,
+                margin: EdgeInsets.all(75.sp), //25
+                color: Color(0xff246ee9),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(67), //5 or 67
+                ),
+                child: NativeAdmob(
+                  // Your ad unit id
+                  adUnitID: _adUnitID,
+                  loading: Center(
+                    child: CircularProgressIndicator(),
+                  ),
+                  numberAds: 3,
+                  controller: _nativeAdController,
+                  type: NativeAdmobType.full,
+                  options: NativeAdmobOptions(
+                    ratingColor: Color(0xff001f53),
+                    headlineTextStyle: NativeTextStyle(color: Colors.white),
+                    bodyTextStyle: NativeTextStyle(isVisible: false),
+                    callToActionStyle: NativeTextStyle(
+                      backgroundColor: Color(0xff001f53),
+                    ),
+                  ),
+                ),
+              ),
+
+
+
+
+
+
+
+
+
+              showadint > 1 ? true : false,
+
+
+
+
+
+
+
+              await timelineRef
+            .where('username', isNotEqualTo: currentUser.username)
+            .get()
+            .then(
+              (QuerySnapshot snapshot) => snapshot.docs.forEach((doc) {
+                // print('WHAT YOU ARE LOOKING FOR BELOW');
+                //print(doc['played']);
+                print(doc['played.${currentUser.id}']);
+                if (doc['played.${currentUser.id}'] == []) {
+                  newdata.add(doc['audioDuration']);
+                }
+                print('OPE THIS IS THE NEWDATA $newdata');
+                print('OPE THIS IS THE NEWDATA LENGHT ${newdata.length}');
+                // print(doc['played.${currentUser.id}']);
+              }),
+            );
+
+
+
+
+            NativeAdmob(
+                        // Your ad unit id
+                        adUnitID: _adUnitID,
+                        loading: Center(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Loading Ad',
+                                style:
+                                    TextStyle(fontSize: 30, color: Colors.white),
+                              ),
+                              SizedBox(
+                                height: 20,
+                              ),
+                              CircularProgressIndicator(
+                                color: Color(0xff001f53),
+                              ),
+                            ],
+                          ),
+                        ),
+                        numberAds: 3,
+                        controller: _nativeAdController,
+                        type: NativeAdmobType.banner,
+                        options: NativeAdmobOptions(
+                          ratingColor: Color(0xff001f53),
+                          headlineTextStyle: NativeTextStyle(color: Colors.white),
+                          bodyTextStyle: NativeTextStyle(isVisible: false),
+                          callToActionStyle: NativeTextStyle(
+                            backgroundColor: Color(0xff001f53),
+                          ),
+                        ),
+                      ),
+
+
+
+
+
+                      NEW AD MOB CUSTOM SETTINGS 
+
+                       AdLayoutBuilder get myCustomLayoutBuilder => (ratingBar, media, icon,
+          headline, advertiser, body, price, store, attribuition, button) {
+        return AdLinearLayout(
+          padding: EdgeInsets.all(10),
+          // The first linear layout width needs to be extended to the
+          // parents height, otherwise the children won't fit good
+          width: MATCH_PARENT,
+          height: MATCH_PARENT,
+          decoration: AdDecoration(
+              gradient: AdLinearGradient(
+            colors: [Colors.indigo[300]!, Colors.indigo[700]!],
+            orientation: AdGradientOrientation.tl_br,
+          )),
+          children: [
+            media,
+            AdLinearLayout(
+              children: [
+                icon,
+                AdLinearLayout(children: [
+                  headline,
+                  AdLinearLayout(
+                    children: [attribuition, advertiser, ratingBar],
+                    orientation: HORIZONTAL,
+                    width: MATCH_PARENT,
+                  ),
+                ], margin: EdgeInsets.only(left: 4)),
+              ],
+              gravity: LayoutGravity.center_horizontal,
+              width: WRAP_CONTENT,
+              orientation: HORIZONTAL,
+              margin: EdgeInsets.only(top: 6),
+            ),
+            AdLinearLayout(
+              children: [button],
+              orientation: HORIZONTAL,
+            ),
+          ],
+        );
+      };
+
+
+
+
+      AdLayoutBuilder get mediumAdTemplateLayoutBuilder {
+  return (ratingBar, media, icon, headline, advertiser, body, price, store,
+      attribution, button) {
+    return AdLinearLayout(
+      decoration: AdDecoration(backgroundColor: Color(0xff246ee9)),
+      width: MATCH_PARENT,
+      height: MATCH_PARENT,
+      gravity: LayoutGravity.center_vertical,
+      padding: EdgeInsets.all(8.0),
+      children: [
+        attribution,
+        AdLinearLayout(
+          padding: EdgeInsets.only(top: 6.0),
+          height: WRAP_CONTENT,
+          orientation: HORIZONTAL,
+          children: [
+            icon,
+            AdExpanded(
+              flex: 2,
+              child: AdLinearLayout(
+                width: WRAP_CONTENT,
+                margin: EdgeInsets.symmetric(horizontal: 4),
+                children: [headline, body, advertiser],
+              ),
+            ),
+          ],
+        ),
+        media,
+        button
+      ],
+    );
+  };
+}

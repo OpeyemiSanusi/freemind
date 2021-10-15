@@ -1,0 +1,192 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_advanced_segment/flutter_advanced_segment.dart';
+
+bool isrecording = false;
+bool isplaying = false;
+
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  final _selectedSegment_0 = AdvancedSegmentController('talk');
+  //final _selectedIndex = _selectedSegment_0.toString();
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25, 15, 0, 40),
+              child: Container(
+                height: 52,
+                width: 230,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/images/logo.png',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 35),
+                child: AdvancedSegment(
+                  controller: _selectedSegment_0,
+                  segments: {
+                    'talk': 'Talk',
+                    'listen': 'Listen',
+                  },
+                  activeStyle: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Poppins',
+                    fontSize: 25,
+                    fontWeight: FontWeight.w700,
+                  ),
+                  inactiveStyle: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Poppins',
+                      fontSize: 20,
+                      fontWeight: FontWeight.w700),
+                  backgroundColor: Color(0xff6a9ef4),
+                  sliderColor: Color(0xff246ee9),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
+                  itemPadding:
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                ),
+              ),
+            ),
+            Center(
+                child: Column(
+              children: [
+                buildPlayerCard(),
+                buildButton(),
+              ],
+            ))
+          ],
+        ),
+      ),
+    );
+  }
+
+  buildPlayerCard() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 35.0),
+      child: Container(
+        width: MediaQuery.of(context).size.width * 0.79,
+        height: MediaQuery.of(context).size.width *
+            0.79, //used width for heigth so it could be a square
+        // color: Colors.black,
+        child: Card(
+          margin: EdgeInsets.zero, //to remove defualt padding or margin
+          color: Color(0xff246ee9),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(5.0),
+          ),
+          child: Column(
+            children: [
+              Padding(
+                padding: const EdgeInsets.only(top: 25),
+                child: Text(
+                  '@opeyemisanusi',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontFamily: 'Poppins',
+                      fontSize: 18,
+                      fontWeight: FontWeight.w200),
+                ),
+              ),
+              SizedBox(height: 30),
+              buildProgressPlayPause()
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  buildProgressPlayPause() {
+    return Container(
+      height: MediaQuery.of(context).size.width * 0.4,
+      width: MediaQuery.of(context).size.width * 0.4,
+      child: Stack(
+        fit: StackFit.expand,
+        children: [
+          CircularProgressIndicator(
+            value: 30.0,
+            strokeWidth: 15,
+            valueColor: AlwaysStoppedAnimation(Color(0xff6a9ef4)),
+            backgroundColor: Color(0xff246ee9),
+          ),
+          Center(
+            child: isplaying == false
+                ? GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isplaying = true;
+                      });
+                    },
+                    child: Icon(
+                      Icons.play_arrow,
+                      color: Colors.white,
+                      size: 90,
+                    ),
+                  )
+                : GestureDetector(
+                    onTap: () {
+                      setState(() {
+                        isplaying = false;
+                      });
+                    },
+                    child: Icon(
+                      Icons.pause,
+                      color: Colors.white,
+                      size: 90,
+                    ),
+                  ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  buildButton() {
+    return GestureDetector(
+      onTap: () {
+        print(_selectedSegment_0);
+      },
+      child: Container(
+        child: Center(
+          child: Text(
+            'NEXT',
+            style: TextStyle(
+                color: Colors.white,
+                fontFamily: 'Poppins',
+                fontSize: 25,
+                fontWeight: FontWeight.w700),
+          ),
+        ),
+        width: MediaQuery.of(context).size.width * 0.5,
+        height: MediaQuery.of(context).size.height * 0.1,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.circular(5),
+          ),
+          color: Color(0xff246ee9),
+        ),
+      ),
+    );
+  }
+}

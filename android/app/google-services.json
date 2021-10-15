@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "639432337669",
+    "firebase_url": "https://freemind-b91fd-default-rtdb.firebaseio.com",
+    "project_id": "freemind-b91fd",
+    "storage_bucket": "freemind-b91fd.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:639432337669:android:ed05f0d2cfb5aea4e6ef6c",
+        "android_client_info": {
+          "package_name": "com.opeyemi.freemind"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "639432337669-o7fjj0lkg3e45d86uu9b8024cs9q3sug.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.opeyemi.freemind",
+            "certificate_hash": "5a8b7da889c6877326a8593cc60e3376a72265bf"
+          }
+        },
+        {
+          "client_id": "639432337669-ua99tm36n3cdk3iv7ovpics7pi59gro7.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCXKq_PLKT-k-GaklFrcaUAEDww7K4HbxY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "639432337669-ua99tm36n3cdk3iv7ovpics7pi59gro7.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

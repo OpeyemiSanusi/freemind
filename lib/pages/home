@@ -1,0 +1,189 @@
+import 'dart:async';
+
+import 'package:flutter/material.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter_advanced_segment/flutter_advanced_segment.dart';
+
+bool isrecording = false;
+
+class Home extends StatefulWidget {
+  @override
+  _HomeState createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
+  double val = 30.0;
+  static const maxseconds = 30;
+  int seconds = maxseconds;
+  Timer? timer;
+
+  void startTimer() {
+    timer = Timer.periodic(Duration(seconds: 1), (_) {
+      setState(() {
+        if (seconds > 0) {
+          seconds--;
+        }
+      });
+    });
+  }
+
+  buildRecord() {
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.center,
+      crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        Text(
+          'What is on your\nmind?',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w800,
+            letterSpacing: -3.0,
+            height: 1.2,
+            color: Color(0xff001f53),
+            fontSize: 40,
+          ),
+        ),
+        SizedBox(
+          height: 25,
+        ),
+        Text(
+          'GET IT OFF YOUR MIND AND\nLISTEN TO OTHERS DO THE SAME',
+          textAlign: TextAlign.center,
+          style: TextStyle(
+            fontFamily: 'Poppins',
+            fontWeight: FontWeight.w800,
+            letterSpacing: -1.5,
+            height: 1.5,
+            color: Color(0xff001f53),
+            fontSize: 20,
+          ),
+        ),
+        SizedBox(
+          height: 30,
+        ),
+        buildplayer(),
+        buildrecbutton(),
+      ],
+    );
+  }
+
+  buildplayer() {
+    return Container(
+      alignment: Alignment.center,
+      width: double.infinity,
+      child: Container(
+        width: 350,
+        height: 100,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(6.0),
+          color: Colors.blue,
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Text(seconds.toString()),
+            LinearProgressIndicator(
+              backgroundColor: Colors.cyanAccent,
+              valueColor: new AlwaysStoppedAnimation<Color>(Colors.red),
+              value: 1 -
+                  seconds /
+                      maxseconds, //seonds / maxsdconds to get % and 1 - to flip the indicators direction
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  buildrecbutton() {
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          isrecording == false ? isrecording = true : isrecording = false;
+        });
+        if (isrecording == true) {
+          seconds = 30; //reset time back to 30 secs
+          startTimer();
+        } else {
+          timer?.cancel();
+        }
+      },
+      child: Container(
+        height: 120,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: isrecording == true
+                  ? AssetImage(
+                      'assets/images/record_stop_button.png',
+                    )
+                  : AssetImage(
+                      'assets/images/record_button.png',
+                    )),
+        ),
+      ),
+    );
+  }
+
+  final _selectedSegment_0 = AdvancedSegmentController('talk');
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: Colors.white,
+      body: Container(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: const EdgeInsets.fromLTRB(25, 15, 0, 40),
+              child: Container(
+                height: 52,
+                width: 230,
+                decoration: BoxDecoration(
+                  image: DecorationImage(
+                    image: AssetImage(
+                      'assets/images/logo.png',
+                    ),
+                  ),
+                ),
+              ),
+            ),
+            Center(
+              child: Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 50),
+                child: AdvancedSegment(
+                  controller: _selectedSegment_0,
+                  segments: {
+                    'talk': 'Talk',
+                    'listen': 'Listen',
+                  },
+                  activeStyle: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Poppins',
+                    fontSize: 25,
+                  ),
+                  inactiveStyle: TextStyle(
+                    color: Colors.white,
+                    fontFamily: 'Poppins',
+                    fontSize: 20,
+                  ),
+                  backgroundColor: Color(0xff6a9ef4),
+                  sliderColor: Color(0xff246ee9),
+                  borderRadius: BorderRadius.all(
+                    Radius.circular(10.0),
+                  ),
+                  itemPadding:
+                      EdgeInsets.symmetric(horizontal: 15, vertical: 15),
+                ),
+              ),
+            ),
+            Center(
+              child: buildRecord(),
+            )
+          ],
+        ),
+      ),
+    );
+  }
+}

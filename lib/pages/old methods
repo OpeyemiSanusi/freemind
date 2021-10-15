@@ -1,0 +1,66 @@
+buildrecbutton() {
+    isrecording = recorder.isRecording; //get the state(T or F) from the class
+    print("recorder is recording ${recorder.isRecording}");
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          recorder.toggleRecording();
+          isrecording == false ? isrecording = true : isrecording = false;
+        });
+        if (isrecording == true) {
+          // seconds = 30; //reset time back to 30 secs
+          // startTimer();
+        } else {
+          // timer?.cancel();
+        }
+      },
+      child: Container(
+        height: 350.h,
+        width: 350.h,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: isrecording == true
+                  ? AssetImage(
+                      'assets/images/record_stop_button.png',
+                    )
+                  : AssetImage(
+                      'assets/images/record_button.png',
+                    )),
+        ),
+      ),
+    );
+  }
+
+
+  buildrecbutton() {
+    isrecording = recorder.isRecording; //get the state(T or F) from the class
+    print("recorder is recording ${recorder.isRecording}");
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          recorder.toggleRecording();
+          isrecording == false ? isrecording = true : isrecording = false;
+        });
+        if (isrecording == true) {
+          // seconds = 30; //reset time back to 30 secs
+          // startTimer();
+        } else {
+          // timer?.cancel();
+        }
+      },
+      child: Container(
+        height: 350.h,
+        width: 350.h,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+              image: isrecording == true
+                  ? AssetImage(
+                      'assets/images/record_stop_button.png',
+                    )
+                  : AssetImage(
+                      'assets/images/record_button.png',
+                    )),
+        ),
+      ),
+    );
+  }
